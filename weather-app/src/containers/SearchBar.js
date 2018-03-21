@@ -18,22 +18,35 @@ class SearchBar extends Component {
   };
 
   render() {
+    const { term } = this.state;
+    const { error } = this.props;
     return (
-      <form onSubmit={this.onFormSubmit} className="input-group">
-        <input
-          placeholder="Get a five-day forecast in your favorite cities"
-          className="form-control"
-          value={this.state.term}
-          onChange={this.onInputChange}
-        />
-        <span className="input-group-btn">
-          <button type="submit" className="btn btn-secondary">
-            Submit
-          </button>
-        </span>
-      </form>
+      <div>
+        <form onSubmit={this.onFormSubmit} className="input-group">
+          <input
+            placeholder="Get a five-day forecast in your favorite cities"
+            className="form-control"
+            value={term}
+            onChange={this.onInputChange}
+          />
+          <span className="input-group-btn">
+            <button type="submit" className="btn btn-secondary">
+              Submit
+            </button>
+          </span>
+        </form>
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {`${error}. Please try again!`}
+          </div>
+        )}
+      </div>
     );
   }
 }
 
-export default connect(null, actions)(SearchBar);
+const mapStateToProps = ({ error }) => ({
+  error
+});
+
+export default connect(mapStateToProps, actions)(SearchBar);
